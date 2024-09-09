@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Compromissos</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <h1>Agenda de Compromissos</h1>
+
+    <div class="top-container">
+        <button id="agendarBtn">+ Agendar Compromisso</button>
+        <input type="text" id="data" placeholder="MM/AAAA">
+    </div>
+
+    <table id="tabelaCompromissos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Data</th>
+                <th>Concluído</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Compromissos serão listados aqui -->
+        </tbody>
+    </table>
+
+    <!-- Modal de agendamento de compromisso -->
+    <div id="modalAgendamento" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Agendar Compromisso</h2>
+
+            <!-- Novo container para alinhar título e data -->
+            <div class="modal-header">
+                <div>
+                    <label for="titulo">Título:</label>
+                    <input type="text" id="titulo" placeholder="Título do Compromisso">
+                </div>
+
+                <div>
+                    <label for="dataModal">Data:</label>
+                    <input type="text" id="dataModal" placeholder="DD/MM/AAAA">
+                </div>
+            </div>
+
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" placeholder="Descrição do Compromisso"></textarea>
+
+            <button id="salvarBtn">Salvar</button>
+            <button id="cancelarBtn">Cancelar</button>
+        </div>
+    </div>
+
+   <!-- Modal de Edição de Compromisso -->
+    <div id="modalEdicao" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editar Compromisso</h2>
+
+            <!-- Mesmo layout para o título e data do modal de edição -->
+            <div class="modal-header">
+                <div>
+                    <label for="tituloEdicao">Título:</label>
+                    <input type="text" id="tituloEdicao" placeholder="Título do Compromisso">
+                </div>
+
+                <div>
+                    <label for="dataEdicao">Data:</label>
+                    <input type="text" id="dataEdicao" placeholder="DD/MM/AAAA">
+                </div>
+            </div>
+
+            <label for="descricaoEdicao">Descrição:</label>
+            <textarea id="descricaoEdicao" placeholder="Descrição do Compromisso"></textarea>
+
+            <button id="salvarEdicaoBtn" class="btn-salvar">Salvar</button>
+            <button id="cancelarEdicaoBtn" class="btn-cancelar">Cancelar</button>
+        </div>
+    </div>
+
+
+
+
+    
+    <!-- Botão temporário para abrir o modal de edição -->
+    <button id="editarBtn" style="margin-top: 20px;">Abrir Modal de Edição</button>
+
+    <script src="https://unpkg.com/vanilla-masker/build/vanilla-masker.min.js"></script>
+    <script src="js/scripts.js"></script>
+
+</body>
+</html>
