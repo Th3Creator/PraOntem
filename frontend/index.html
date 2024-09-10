@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda de Compromissos</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <h1>Agenda de Compromissos</h1>
@@ -84,14 +84,11 @@
     </div>
 
 
-
-
-    
     <!-- Botão temporário para abrir o modal de edição -->
     <button id="editarBtn" style="margin-top: 20px;">Abrir Modal de Edição</button>
 
     <script src="https://unpkg.com/vanilla-masker/build/vanilla-masker.min.js"></script>
-    <script src="js/scripts.js"></script>
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>   
 
 </body>
 </html>
