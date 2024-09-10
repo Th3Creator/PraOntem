@@ -1,6 +1,105 @@
-console.log("Script carregado com sucesso!");
+class Compromisso {
+    static CriaCompromisso = async()=>{
+        try {
+            
+            // seleciona todas variáveis 
 
-window.onload = function() {
+
+            // valida se os campos não podem ser vazios
+
+
+            // cria requisão ajax: Mandar os valores pro back
+            // $.ajax({
+            //     url: '',
+            //     type: 'post',
+            //     data: {
+            //         'titulo': titulo,
+            //         'descricao': descricao,
+            //         'status': 1,
+            //         'data': data
+            //     }, 
+            //     success: function(response) {
+            //         alert("Compromisso criado com sucesso.");
+            //     },
+            //     error: function(response) {
+            //         alert("Houve um erro ao criar.");
+            //     }
+            // });
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    static AtualizaCompromisso = async()=>{
+        try {
+            // seleciona todas variáveis 
+
+
+            // valida se os campos não podem ser vazios
+
+
+            // cria requisão ajax: Mandar os valores pro back
+        }catch(error) {
+            console.log(error)
+        }
+    }
+
+    static DeletaCompromisso = async()=>{
+        try {
+            // seleciona todas variáveis 
+
+
+            // valida se os campos não podem ser vazios
+
+
+            // cria requisão ajax: Mandar os valores pro back
+        }catch(error) {
+            console.log(error)
+        }
+    }
+
+    static BuscaCompromisso = async()=>{
+        try {
+            // seleciona todas variáveis 
+
+
+            // valida se os campos não podem ser vazios
+
+
+            // cria requisão ajax: Mandar os valores pro back
+        }catch(error) {
+            console.log(error)
+        }
+    }
+}
+
+$(document).ready(function() {
+    $('[a-id="cria-compromisso"]').click(function() {
+
+        Compromisso.CriaCompromisso();
+
+    });
+
+    $('[a-id="atualiza-compromisso"]').click(function() {
+
+        Compromisso.AtualizaCompromisso();
+
+    });
+
+    $('[a-id="deleta-compromisso"]').click(function() {
+
+        Compromisso.DeletaCompromisso();
+
+    });
+
+    $('[a-id="busca-compromisso"]').click(function() {
+
+        Compromisso.BuscaCompromisso();
+
+    });
+});
+
+(() => {
     var dataInput = document.getElementById("data");
     VMasker(dataInput).maskPattern("99/9999"); // Máscara para MM/AAAA
 
@@ -80,7 +179,4 @@ window.onload = function() {
             fecharModalEdicao();
         }
     }
-
-
-
-};
+})();

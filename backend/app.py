@@ -101,19 +101,18 @@ def BuscaCompromissos():
 
         return compromissos
 
-# @app.route('/busca/compromissos/competencia', methods=['GET'])
-# def CompromissosPorCompetencia():
-#        with ConectaBD as conexao:
-#         cursor = conexao.cursor()
-#         cursor.execute('SELECT * FROM Compromissos')
-#         compromissos = cursor.fetchall()
+@app.route('/busca/compromissos/competencia', methods=['GET'])
+def CompromissosPorCompetencia():
+       with ConectaBD as conexao:
+        cursor = conexao.cursor()
+        cursor.execute('SELECT * FROM Compromissos')
+        compromissos = cursor.fetchall()
 
-#         return compromissos
+        return compromissos
 
 @app.route('/')
 def PaginaInicial():
     return render_template('index.html')
-
 
 if __name__ == '__main__':
     app.run(debug=True)
