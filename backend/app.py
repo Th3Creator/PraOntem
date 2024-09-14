@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, session, abort
+from flask import Flask, render_template, request, flash, redirect, url_for, session, abort, jsonify
 import sqlite3
 
 app = Flask(__name__, static_folder='../frontend', template_folder='../frontend')
-
 
 #CONEXÃO COM O BANCO
 def ConectaBD():
@@ -86,29 +85,37 @@ def DeletaCompromisso():
 
     with ConectaBD() as conexao:
         cursor = conexao.cursor()
-        cursor.execute('DELETE FROM Compromissos WHERE IDCompromisso = ? GO', 
+        cursor.execute('DELETE FROM Compromissos WHERE IDCompromisso = ?', 
                        (idCompromisso))
         conexao.commit()
 
     return '', 204
 
-@app.route('/busca/compromissos', methods=['GET'])
-def BuscaCompromissos():
-    with ConectaBD() as conexao:
-        cursor = conexao.cursor()
-        cursor.execute('SELECT * FROM Compromissos')
-        compromissos = cursor.fetchall()
-
-        return compromissos
-
 @app.route('/busca/compromissos/competencia', methods=['GET'])
 def CompromissosPorCompetencia():
-       with ConectaBD as conexao:
-        cursor = conexao.cursor()
-        cursor.execute('SELECT * FROM Compromissos')
-        compromissos = cursor.fetchall()
+    ano = request.args.get('ano')
+    mes = request.args.get('mes')
 
-        return compromissos
+    if not ano or not mes:
+        return jsonify({"error": "Parâmetros 'ano' e 'mes' são necessários."}), 400
+
+    try:
+        with ConectaBD() as conexao:
+            cursor = conexao.cursor()
+            query = """
+                SELECT Compromisso.IDCompromisso, Compromisso.Titulo, Compromisso.Descricao, Compromisso.Data 
+                FROM Compromissos Compromisso 
+                WHERE strftime('%Y', Compromisso.Data) = ? 
+                AND strftime('%m', Compromisso.Data) = ?
+            """
+            cursor.execute(query, (ano, mes))
+            compromissos = cursor.fetchall()
+
+            resultado = [{"IDCompromisso": c[0], "Titulo": c[1], "Descricao": c[2], "Data": c[3]} for c in compromissos]
+            return jsonify(resultado)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/')
 def PaginaInicial():

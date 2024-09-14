@@ -1,30 +1,26 @@
 class Compromisso {
     static CriaCompromisso = async()=>{
-        try {
-            
-            // seleciona todas variáveis 
+        try {        
+            let titulo = $('[a-id="titulo"]').val();
+            let data = $('[a-id="data"]').val();
+            let descricao = $('[a-id="descricao"]').val();
 
-
-            // valida se os campos não podem ser vazios
-
-
-            // cria requisão ajax: Mandar os valores pro back
-            // $.ajax({
-            //     url: '',
-            //     type: 'post',
-            //     data: {
-            //         'titulo': titulo,
-            //         'descricao': descricao,
-            //         'status': 1,
-            //         'data': data
-            //     }, 
-            //     success: function(response) {
-            //         alert("Compromisso criado com sucesso.");
-            //     },
-            //     error: function(response) {
-            //         alert("Houve um erro ao criar.");
-            //     }
-            // });
+            $.ajax({
+                url: '/cria/compromisso',
+                type: 'post',
+                data: {
+                    'titulo': titulo,
+                    'descricao': descricao,
+                    'status': 1,
+                    'data': data
+                }, 
+                success: function(response) {
+                    alert("Compromisso criado com sucesso.");
+                },
+                error: function(response) {
+                    alert("Houve um erro ao criar.");
+                }
+            });
         } catch (error) {
             console.log(error)
         }
@@ -32,44 +28,81 @@ class Compromisso {
 
     static AtualizaCompromisso = async()=>{
         try {
-            // seleciona todas variáveis 
 
-
-            // valida se os campos não podem ser vazios
-
-
-            // cria requisão ajax: Mandar os valores pro back
         }catch(error) {
             console.log(error)
         }
     }
 
-    static DeletaCompromisso = async()=>{
+    static DeletaCompromisso = async(idCompromisso)=>{
         try {
-            // seleciona todas variáveis 
-
-
-            // valida se os campos não podem ser vazios
-
-
-            // cria requisão ajax: Mandar os valores pro back
+            
+            $.ajax({
+                url: '/deleta/compromisso',
+                type: 'delete',
+                data: {
+                    'idCompromisso': idCompromisso,
+                }, 
+                success: function(response) {
+                    alert("Deletado!");
+                    Compromisso.BuscaCompromissos();
+                },
+                error: function(response) {
+                    alert("Houve um erro ao deletar.");
+                }
+            });
         }catch(error) {
             console.log(error)
         }
     }
 
-    static BuscaCompromisso = async()=>{
+    static BuscaCompromissos = async()=>{
         try {
-            // seleciona todas variáveis 
+            let dataCompetencia = $('[a-id="data-competencia"]').val();
+            let [mes, ano] = dataCompetencia.split('/');
 
-
-            // valida se os campos não podem ser vazios
-
-
-            // cria requisão ajax: Mandar os valores pro back
+            $.ajax({
+                url: '/busca/compromissos/competencia',
+                type: 'get',
+                data: {
+                    'ano': ano,
+                    'mes': mes,
+                }, 
+                success: function(response) {
+                    Compromisso.ListaCompromissos(response);
+                },
+                error: function(response) {
+                    alert("Houve um erro ao buscar.");
+                }
+            });
         }catch(error) {
             console.log(error)
         }
+    }
+
+    static ListaCompromissos = (compromissos)=>{
+        let tBody = $('[a-id="tbody-compromissos"]');
+        tBody.empty();
+
+        compromissos.forEach((compromisso) => {
+            let compromissoHTML = `
+                <tr>
+                    <td>${compromisso.Titulo}</td>
+                    <td>${compromisso.Descricao}</td>
+                    <td>${compromisso.Data}</td>
+                    <td>Sim</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-danger" id="${compromisso.IDCompromisso}" a-id="deleta-compromisso">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"></path>
+                            </svg>       
+                        </button>
+                    </td>
+                </tr>
+            `;
+
+            tBody.append(compromissoHTML);
+        });
     }
 }
 
@@ -86,15 +119,15 @@ $(document).ready(function() {
 
     });
 
-    $('[a-id="deleta-compromisso"]').click(function() {
+    $('[a-id="busca-compromisso"]').click(function() {
 
-        Compromisso.DeletaCompromisso();
+        Compromisso.BuscaCompromissos();
 
     });
 
-    $('[a-id="busca-compromisso"]').click(function() {
+    $(document).on('click', '[a-id="deleta-compromisso"]', function() {
 
-        Compromisso.BuscaCompromisso();
+        Compromisso.DeletaCompromisso($(this).attr('id'));
 
     });
 });
