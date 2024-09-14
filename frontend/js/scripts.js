@@ -1,7 +1,8 @@
+// scripts.js
 class Compromisso {
     static CriaCompromisso = async()=>{
         try {
-            
+            debugger;
             // seleciona todas variáveis 
 
 
@@ -45,6 +46,7 @@ class Compromisso {
     }
 
     static DeletaCompromisso = async()=>{
+        debugger;
         try {
             // seleciona todas variáveis 
 
@@ -87,7 +89,7 @@ $(document).ready(function() {
     });
 
     $('[a-id="deleta-compromisso"]').click(function() {
-
+        debugger;
         Compromisso.DeletaCompromisso();
 
     });
@@ -98,85 +100,80 @@ $(document).ready(function() {
 
     });
 });
+window.onload = function () {
+    // Campo de data na página principal (MM/AAAA)
+    const inputData = document.getElementById('data');
+    if (inputData) {
+        inputData.addEventListener('input', function () {
+            let valor = inputData.value.replace(/\D/g, ''); // Remove qualquer caractere não numérico
 
-(() => {
-    var dataInput = document.getElementById("data");
-    VMasker(dataInput).maskPattern("99/9999"); // Máscara para MM/AAAA
+            // Adiciona a barra automaticamente depois do segundo dígito (MM/AAAA)
+            if (valor.length >= 3) {
+                valor = valor.slice(0, 2) + '/' + valor.slice(2);
+            }
 
-    //Definição da data para o mês atual 
-    var dia = new Date();
-    var mes = String(dia.getMonth()+1).padStart(2,'0')
-    var ano = dia.getFullYear();
-    //Apresenta no campo
-    dataInput.value = mes + '/' + ano;
+            inputData.value = valor;
 
-    // Máscara para o campo de data do modal
-    var dataModalInput = document.getElementById("dataModal");
-    VMasker(dataModalInput).maskPattern("99/99/9999"); // Mesma máscara para o modal
-
-    // Lógica de abertura e fechamento do modal
-    var modal = document.getElementById("modalAgendamento");
-    var btn = document.getElementById("agendarBtn");
-    var span = document.getElementsByClassName("close")[0];
-    var cancelarBtn = document.getElementById("cancelarBtn");
-
-    // Abrir o modal ao clicar no botão "Agendar Compromisso"
-    btn.onclick = function() {
-        modal.style.display = "block";
+            // Validação simples para formato MM/AAAA
+            const regex = /^(0[1-9]|1[0-2])\/\d{4}$/;
+            if (!regex.test(valor)) {
+                inputData.classList.add('is-invalid');
+                inputData.classList.remove('is-valid');
+            } else {
+                inputData.classList.remove('is-invalid');
+                inputData.classList.add('is-valid');
+            }
+        });
     }
 
-    // Fechar o modal ao clicar no "X"
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
+    // Campo de data no modal (DD/MM/AAAA)
+    const inputDataModal = document.getElementById('dataModal');
+    if (inputDataModal) {
+        inputDataModal.addEventListener('input', function () {
+            let valor = inputDataModal.value.replace(/\D/g, ''); // Remove qualquer caractere não numérico
 
-    // Fechar o modal ao clicar no "Cancelar"
-    cancelarBtn.onclick = function() {
-        modal.style.display = "none";
-    }
+            // Adiciona a barra automaticamente depois do segundo e do quarto dígito (DD/MM/AAAA)
+            if (valor.length >= 3) {
+                valor = valor.slice(0, 2) + '/' + valor.slice(2);
+            }
+            if (valor.length >= 6) {
+                valor = valor.slice(0, 5) + '/' + valor.slice(5);
+            }
 
-    // Fechar o modal ao clicar fora dele
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
+            inputDataModal.value = valor;
 
-      // Lógica para abrir e fechar o modal de edição
-    var modalEdicao = document.getElementById("modalEdicao");
-    var btnFecharEdicao = document.getElementsByClassName("close")[1]; // Segundo botão "fechar" do modal de edição
-    var cancelarEdicaoBtn = document.getElementById("cancelarEdicaoBtn");
-    var editarBtn = document.getElementById("editarBtn"); // Botão temporário de edição
-
-    // Função para abrir o modal de edição
-    function abrirModalEdicao() {
-        modalEdicao.style.display = "block";
+            // Validação simples para formato DD/MM/AAAA
+            const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+            if (!regex.test(valor)) {
+                inputDataModal.classList.add('is-invalid');
+                inputDataModal.classList.remove('is-valid');
+            } else {
+                inputDataModal.classList.remove('is-invalid');
+                inputDataModal.classList.add('is-valid');
+            }
+        });
     }
+};
 
-    // Função para fechar o modal de edição
-    function fecharModalEdicao() {
-        modalEdicao.style.display = "none";
-    }
+document.addEventListener('DOMContentLoaded', function () {
+    // Selecionar todas as linhas da tabela
+    const linhasTabela = document.querySelectorAll('tbody tr');
 
-    // Abrir o modal ao clicar no botão "Abrir Modal de Edição"
-    editarBtn.onclick = function() {
-        abrirModalEdicao();
-    }
+    // Adicionar evento de clique a cada linha
+    linhasTabela.forEach(function (linha) {
+        linha.addEventListener('click', function () {
+            // Extrair os dados do compromisso da linha
+            const titulo = this.cells[0].textContent;
+            const descricao = this.cells[1].textContent;
+            const data = this.cells[2].textContent;
 
-    // Fechar o modal ao clicar no botão "fechar" (X)
-    btnFecharEdicao.onclick = function() {
-        fecharModalEdicao();
-    }
+            // Preencher o modal de edição com os dados
+            document.getElementById('tituloEdicao').value = titulo;
+            document.getElementById('dataEdicao').value = data;
+            document.getElementById('descricaoEdicao').value = descricao;
 
-    // Fechar o modal ao clicar no botão "Cancelar"
-    cancelarEdicaoBtn.onclick = function() {
-        fecharModalEdicao();
-    }
-
-    // Fechar o modal ao clicar fora dele
-    window.onclick = function(event) {
-        if (event.target == modalEdicao) {
-            fecharModalEdicao();
-        }
-    }
-})();
+            // Abrir o modal de edição
+            $('#modalEdicao').modal('show');
+        });
+    });
+});
