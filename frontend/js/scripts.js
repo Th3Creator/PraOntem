@@ -186,12 +186,6 @@ $(document).ready(function() {
 
     });
 
-    $('[a-id="busca-compromisso"]').click(function() {
-
-        Compromisso.BuscaCompromissos();
-
-    });
-
     $(document).on('click', '[a-id="deleta-compromisso"]', function() {
 
         Compromisso.DeletaCompromisso($(this).attr('id'));
