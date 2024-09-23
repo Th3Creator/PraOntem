@@ -31,7 +31,7 @@ class Compromisso {
             let titulo = $('[a-id="titulo"]').val();
             let data = $('[a-id="data"]').val();
             let descricao = $('[a-id="descricao"]').val();
-
+            debugger;
             $.ajax({
                 url: '/atualiza/compromisso',
                 type: 'put',
@@ -166,16 +166,25 @@ class Compromisso {
 }
 
 $(document).ready(function() {
-    $('[a-id="cria-compromisso"]').click(function() {
+
+    $(document).on('click', '[a-id="cria-compromisso"]', function() {
 
         Compromisso.CriaCompromisso();
         debugger;
+
     });
 
-    $('[a-id="atualiza-compromisso"]').click(function() {
+    $(document).on('click', '[a-id="atualiza-compromisso"]', function() {
 
-        Compromisso.AtualizaCompromisso($(this).find('[a-id="deleta-compromisso"]').attr('id'));
+        Compromisso.AtualizaCompromisso($(document).find('[a-id="deleta-compromisso"]').attr('id'));
         debugger;
+
+    });
+
+    $(document).on('click', '[a-id="busca-compromisso"]', function() {
+
+        Compromisso.BuscaCompromissos();
+
     });
 
     $('[a-id="busca-compromisso"]').click(function() {
