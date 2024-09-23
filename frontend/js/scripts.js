@@ -107,7 +107,7 @@ class Compromisso {
                 url: `/busca/compromisso/${idCompromisso}`,
                 type: 'get',
                 success: function(compromisso) {
-                    $('[a-id="titulo"]').val("teste");
+                    $('[a-id="titulo"]').val(compromisso.Titulo);
                     $('[a-id="data"]').val(compromisso.Data);
                     $('[a-id="descricao"]').val(compromisso.Descricao);
         
