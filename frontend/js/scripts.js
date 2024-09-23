@@ -170,7 +170,6 @@ $(document).ready(function() {
     $(document).on('click', '[a-id="cria-compromisso"]', function() {
 
         Compromisso.CriaCompromisso();
-        debugger;
 
     });
 
@@ -193,8 +192,8 @@ $(document).ready(function() {
     });
 
     $(document).on('click', 'tr td:not(:last-child)', function() {
-        $('[a-id="titulo"]').val("teste");
-        Compromisso.BuscaCompromissoPorID($(this).closest('tr').find('[a-id="deleta-compromisso"]').attr('id'))
+
+        Compromisso.BuscaCompromissoPorID($(document).find('[a-id="deleta-compromisso"]').attr('id'))
 
     });
 });
