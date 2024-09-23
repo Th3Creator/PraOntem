@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agenda de compromissos</title>
-    <!-- Incluindo o CSS do Bootstrap 4.1.3 -->
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-    <!-- Incluindo o seu arquivo de estilos personalizados -->
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
 
@@ -18,16 +17,15 @@
     </div>
 
     <div class="d-flex justify-content-center align-items-center mb-4">
-        <!-- Botão para abrir o modal de Agendamento -->
-        <button id="agendarBtn" class="btn btn-primary mr-3" data-toggle="modal" data-target="#modalAgendamento">+ Agendar Compromisso</button>
-        
-        <div class="input-group" style="max-width: 200px;">
-            <input type="text" id="data" class="form-control" placeholder="MM/AAAA">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">
-                    <img src="/frontend/assets/img/pngtree-magnifying-glass-icon-illustration-png-image_8626564.png" alt="Pesquisar" style="width: 20px; height: 20px;">
-                </button>
-            </div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">+ Agendar Compromisso</button>
+
+        <div class="d-flex align-items-center">
+            <input type="text" id="data" class="form-control" placeholder="MM/AAAA" a-id="data-competencia">
+            <button a-id="busca-compromisso">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -45,118 +43,49 @@
                         <th>Excluir</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Compromisso 1</td>
-                        <td>Reunião importante para discutir metas</td>
-                        <td>12/12/2024</td>
-                        <td>Sim</td>
-                        <td>
-                            <button class="btn btn-outline-danger">
-                                <i class="fas fa-trash"></i> <!-- Ícone de lixeira -->
-                            </button>
-                        </td>
-                    </tr>
-                    <!-- Mais linhas de exemplo -->
-                    
+
+                <tbody a-id="tbody-compromissos">
 
                 </tbody>
             </table>
         </div>
     </div>
 
-    <!-- Modal de Edição de Compromisso -->
-    <div class="modal fade" id="modalEdicao" tabindex="-1" role="dialog" aria-labelledby="modalLabelEdicao" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabelEdicao">Editar Compromisso</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="tituloEdicao">Título:</label>
-                                <input type="text" class="form-control" id="tituloEdicao" placeholder="Título do Compromisso">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="dataEdicao">Data:</label>
-                                <input type="text" class="form-control" id="dataEdicao" placeholder="DD/MM/AAAA">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="descricaoEdicao">Descrição:</label>
-                        <textarea class="form-control" id="descricaoEdicao" placeholder="Descrição do Compromisso"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="salvarEdicaoBtn">Salvar Edição</button>
-                </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 >Agende seu compromisso</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <div class="modal-body">
+            <label class="col-form-label">Título:</label>
+            <textarea type="text" class="form-control" id="tituloModal" a-id="titulo"></textarea>
+
+            <label  class="col-form-label">Data:</label>
+            <textarea type="text" class="form-control" id="dataModal" a-id="data"></textarea>
+
+            <div class="form-group">
+                <label for="message-text" class="col-form-label">Descrição:</label>
+                <textarea class="form-control" id="message-text" a-id="descricao"></textarea>
             </div>
         </div>
-    </div>
 
 
-
-
-    <!-- Modal de Agendamento de Compromisso -->
-    <div class="modal fade" id="modalAgendamento" tabindex="-1" role="dialog" aria-labelledby="modalLabelAgendar" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalLabelAgendar">Agendar Compromisso</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Usando Grid do Bootstrap para organizar os campos Título e Data lado a lado -->
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="tituloModal">Título:</label>
-                                <input type="text" class="form-control" id="tituloModal" placeholder="Título do Compromisso">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="dataModal">Data:</label>
-                                <input type="text" class="form-control" id="dataModal" placeholder="DD/MM/AAAA">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="descricaoModal">Descrição:</label>
-                        <textarea class="form-control" id="descricaoModal" placeholder="Descrição do Compromisso"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" a-id="cria-compromisso">Salvar</button>
-                </div>
-            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-primary" a-id="cria-compromisso">Criar</button>
         </div>
     </div>
-
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vanilla-masker/build/vanilla-masker.min.js"></script>
-    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>   
-
-    <!-- Scripts do Bootstrap (JavaScript) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-
-    <!-- Incluindo o seu arquivo JavaScript personalizado -->
-    <script src="/frontend/js/scripts.js"></script>
-
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

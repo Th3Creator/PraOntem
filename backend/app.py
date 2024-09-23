@@ -47,7 +47,6 @@ class Observer:
         return "hw"
 
 
-#ROTAS
 @app.route('/cria/compromisso', methods=['POST'])
 def CriaCompromisso():
     titulo = request.form.get('titulo')
@@ -82,11 +81,10 @@ def AtualizaCompromisso():
 @app.route('/deleta/compromisso', methods=['DELETE'])
 def DeletaCompromisso():
     idCompromisso = request.form.get('idCompromisso')
-
+    print(idCompromisso)
     with ConectaBD() as conexao:
         cursor = conexao.cursor()
-        cursor.execute('DELETE FROM Compromissos WHERE IDCompromisso = ?', 
-                       (idCompromisso))
+        cursor.execute('DELETE FROM Compromissos WHERE IDCompromisso = ?', (idCompromisso,))
         conexao.commit()
 
     return '', 204
@@ -103,16 +101,46 @@ def CompromissosPorCompetencia():
         with ConectaBD() as conexao:
             cursor = conexao.cursor()
             query = """
-                SELECT Compromisso.IDCompromisso, Compromisso.Titulo, Compromisso.Descricao, Compromisso.Data 
-                FROM Compromissos Compromisso 
-                WHERE strftime('%Y', Compromisso.Data) = ? 
-                AND strftime('%m', Compromisso.Data) = ?
+                SELECT Compromisso.IDCompromisso, 
+                    Compromisso.Titulo, 
+                    Compromisso.Descricao, 
+                    Compromisso.Data
+                FROM Compromissos Compromisso
+                WHERE substr(Compromisso.Data, 4, 2) = ?  
+                AND substr(Compromisso.Data, 7, 4) = ? 
             """
-            cursor.execute(query, (ano, mes))
+            cursor.execute(query, (mes, ano))
             compromissos = cursor.fetchall()
 
             resultado = [{"IDCompromisso": c[0], "Titulo": c[1], "Descricao": c[2], "Data": c[3]} for c in compromissos]
             return jsonify(resultado)
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/busca/compromisso/<int:id>', methods=['GET'])
+def CompromissoPorID(id):
+    try:
+        with ConectaBD() as conexao:
+            cursor = conexao.cursor()
+            query = """
+                SELECT IDCompromisso, Titulo, Descricao, Data
+                FROM Compromissos
+                WHERE IDCompromisso = ?
+            """
+            cursor.execute(query, (id,))
+            compromisso = cursor.fetchone()
+
+            if compromisso:
+                resultado = {
+                    "IDCompromisso": compromisso[0],
+                    "Titulo": compromisso[1],
+                    "Descricao": compromisso[2],
+                    "Data": compromisso[3]
+                }
+                return jsonify(resultado), 200
+            else:
+                return jsonify({"error": "Compromisso não encontrado."}), 404
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

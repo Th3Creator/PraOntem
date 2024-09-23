@@ -26,9 +26,29 @@ class Compromisso {
         }
     }
 
-    static AtualizaCompromisso = async()=>{
+    static AtualizaCompromisso = async(idCompromisso)=>{
         try {
+            let titulo = $('[a-id="titulo"]').val();
+            let data = $('[a-id="data"]').val();
+            let descricao = $('[a-id="descricao"]').val();
 
+            $.ajax({
+                url: '/atualiza/compromisso',
+                type: 'put',
+                data: {
+                    'idCompromisso': idCompromisso,
+                    'titulo': titulo,
+                    'descricao': descricao,
+                    'status': 1,
+                    'data': data
+                }, 
+                success: function(response) {
+                    alert("Compromisso atualizado com sucesso.");
+                },
+                error: function(response) {
+                    alert("Houve um erro ao criar.");
+                }
+            });
         }catch(error) {
             console.log(error)
         }
@@ -45,7 +65,7 @@ class Compromisso {
                 }, 
                 success: function(response) {
                     alert("Deletado!");
-                    Compromisso.BuscaCompromissos();
+                    Compromisso.BuscaCompromissos()
                 },
                 error: function(response) {
                     alert("Houve um erro ao deletar.");
@@ -66,7 +86,7 @@ class Compromisso {
                 type: 'get',
                 data: {
                     'ano': ano,
-                    'mes': mes,
+                    'mes': mes
                 }, 
                 success: function(response) {
                     Compromisso.ListaCompromissos(response);
@@ -76,6 +96,31 @@ class Compromisso {
                 }
             });
         }catch(error) {
+            console.log(error)
+        }
+    }
+
+    static BuscaCompromissoPorID = async(idCompromisso)=>{
+        try {
+            
+            $.ajax({
+                url: `/busca/compromisso/${idCompromisso}`,
+                type: 'get',
+                success: function(compromisso) {
+                    $('[a-id="titulo"]').val("teste");
+                    $('[a-id="data"]').val(compromisso.Data);
+                    $('[a-id="descricao"]').val(compromisso.Descricao);
+        
+                    $('[a-id="cria-compromisso"]').text('Salvar');
+                    $('[a-id="cria-compromisso"]').attr('id', idCompromisso);
+                    $('[a-id="cria-compromisso"]').attr('a-id', 'atualiza-compromisso');
+                    Compromisso.AbreModalCompromisso();
+                },
+                error: function() {
+                    alert("Erro ao buscar compromisso.");
+                }
+            });
+        } catch (error) {
             console.log(error)
         }
     }
@@ -104,19 +149,33 @@ class Compromisso {
             tBody.append(compromissoHTML);
         });
     }
+
+    static AbreModalCompromisso = ()=>{
+
+
+        $('#exampleModal').modal('show');
+    }
+
+    static FechaModalCompromisso = ()=>{
+
+        
+        $('[a-id="cria-compromisso"]').text('Criar');
+        $('[a-id="cria-compromisso"]').attr('id', 0);
+        $('#exampleModal').modal('hide');
+    }
 }
 
 $(document).ready(function() {
     $('[a-id="cria-compromisso"]').click(function() {
 
         Compromisso.CriaCompromisso();
-
+        debugger;
     });
 
     $('[a-id="atualiza-compromisso"]').click(function() {
 
-        Compromisso.AtualizaCompromisso();
-
+        Compromisso.AtualizaCompromisso($(this).find('[a-id="deleta-compromisso"]').attr('id'));
+        debugger;
     });
 
     $('[a-id="busca-compromisso"]').click(function() {
@@ -130,9 +189,15 @@ $(document).ready(function() {
         Compromisso.DeletaCompromisso($(this).attr('id'));
 
     });
+
+    $(document).on('click', 'tr td:not(:last-child)', function() {
+        $('[a-id="titulo"]').val("teste");
+        Compromisso.BuscaCompromissoPorID($(this).closest('tr').find('[a-id="deleta-compromisso"]').attr('id'))
+
+    });
 });
 
-window.onload = function () {
+window.onload = function () { 
     // Campo de data na página principal (MM/AAAA)
     const inputData = document.getElementById('data');
     if (inputData) {
@@ -185,27 +250,18 @@ window.onload = function () {
             }
         });
     }
+
+
+    
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Selecionar todas as linhas da tabela
-    const linhasTabela = document.querySelectorAll('tbody tr');
-
-    // Adicionar evento de clique a cada linha
-    linhasTabela.forEach(function (linha) {
-        linha.addEventListener('click', function () {
-            // Extrair os dados do compromisso da linha
-            const titulo = this.cells[0].textContent;
-            const descricao = this.cells[1].textContent;
-            const data = this.cells[2].textContent;
-
-            // Preencher o modal de edição com os dados
-            document.getElementById('tituloEdicao').value = titulo;
-            document.getElementById('dataEdicao').value = data;
-            document.getElementById('descricaoEdicao').value = descricao;
-
-            // Abrir o modal de edição
-            $('#modalEdicao').modal('show');
-        });
-    });
+$('#exampleModal').on('show.bs.modal', function (event) {
+    // Botão que acionou o modal
+    var button = $(event.relatedTarget);
+    // Extrair informação dos atributos data-whatever
+    var recipient = button.data('whatever');
+    // Atualizar o conteúdo do modal
+    var modal = $(this);
+    modal.find('.modal-title').text('Nova mensagem para ' + recipient);
+    modal.find('.modal-body input').val(recipient);
 });
