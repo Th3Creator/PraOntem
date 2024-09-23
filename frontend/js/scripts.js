@@ -31,7 +31,7 @@ class Compromisso {
             let titulo = $('[a-id="titulo"]').val();
             let data = $('[a-id="data"]').val();
             let descricao = $('[a-id="descricao"]').val();
-            debugger;
+
             $.ajax({
                 url: '/atualiza/compromisso',
                 type: 'put',
@@ -177,7 +177,6 @@ $(document).ready(function() {
     $(document).on('click', '[a-id="atualiza-compromisso"]', function() {
 
         Compromisso.AtualizaCompromisso($(document).find('[a-id="deleta-compromisso"]').attr('id'));
-        debugger;
 
     });
 
