@@ -20,7 +20,7 @@
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">+ Agendar Compromisso</button>
 
         <div class="d-flex align-items-center">
-            <input type="text" id="data" class="form-control" placeholder="MM/AAAA" a-id="data-competencia">
+            <input type="text" id="data" class="form-control" placeholder="MM/AAAA" a-id="data-competencia" maxlength="7">
             <button a-id="busca-compromisso">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
@@ -67,7 +67,7 @@
             <textarea type="text" class="form-control" id="tituloModal" a-id="titulo"></textarea>
 
             <label  class="col-form-label">Data:</label>
-            <textarea type="text" class="form-control" id="dataModal" a-id="data"></textarea>
+            <textarea type="text" class="form-control" id="dataModal" a-id="data"  maxlength="10"></textarea>
 
             <div class="form-group">
                 <label for="message-text" class="col-form-label">Descrição:</label>
@@ -81,6 +81,18 @@
             <button type="button" class="btn btn-primary" a-id="cria-compromisso">Criar</button>
         </div>
     </div>
+    </div>
+
+
+    <!-- Modal de Sucesso -->
+    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+            <h5 class="modal-title" id="successModalLabel" style="font-size: 24px;">Compromisso criado com sucesso!</h5>
+            </div>
+        </div>
+        </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

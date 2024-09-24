@@ -5,6 +5,12 @@ class Compromisso {
             let data = $('[a-id="data"]').val();
             let descricao = $('[a-id="descricao"]').val();
 
+             // Validação dos campos
+             if (!titulo || !data) {
+                alert("Por favor, preencha os campos de título e data.");
+                return; // Impede a criação se os campos estiverem vazios
+            }
+
             $.ajax({
                 url: '/cria/compromisso',
                 type: 'post',
@@ -15,7 +21,13 @@ class Compromisso {
                     'data': data
                 }, 
                 success: function(response) {
-                    alert("Compromisso criado com sucesso.");
+                    
+                    // Fechar o modal de compromisso (opcional)
+                    $('#exampleModal').modal('hide');
+
+                    
+                    //Mensagem 
+                    $('#successModal').modal('show');
                 },
                 error: function(response) {
                     alert("Houve um erro ao criar.");
@@ -265,4 +277,18 @@ $('#exampleModal').on('show.bs.modal', function (event) {
     var modal = $(this);
     modal.find('.modal-title').text('Nova mensagem para ' + recipient);
     modal.find('.modal-body input').val(recipient);
+});
+
+// Evento que ocorre quando o modal é fechado
+$('#exampleModal').on('hidden.bs.modal', function () {
+    // Limpa todos os campos do modal (inputs e textareas)
+    $(this).find('input').val('');
+    $(this).find('textarea').val('');
+    
+    // Remove as classes de validação (se os campos tinham sido validados)
+    $(this).find('.is-valid, .is-invalid').removeClass('is-valid is-invalid');
+    
+    // Volta o botão "Criar" para o estado inicial (caso o modal seja usado para criar ou atualizar)
+    $('[a-id="cria-compromisso"]').text('Criar');  
+    $('[a-id="cria-compromisso"]').attr('id', 0);
 });
