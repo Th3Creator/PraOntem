@@ -114,7 +114,7 @@ class Compromisso {
 
     static BuscaCompromissoPorID = async(idCompromisso)=>{
         try {
-            
+            debugger;
             $.ajax({
                 url: `/busca/compromisso/${idCompromisso}`,
                 type: 'get',
@@ -204,8 +204,8 @@ $(document).ready(function() {
     });
 
     $(document).on('click', 'tr td:not(:last-child)', function() {
-
-        Compromisso.BuscaCompromissoPorID($(document).find('[a-id="deleta-compromisso"]').attr('id'))
+        
+        Compromisso.BuscaCompromissoPorID($(this).closest('tr').find('[a-id="deleta-compromisso"]').attr('id'))
 
     });
 });
