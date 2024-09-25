@@ -114,7 +114,7 @@ class Compromisso {
 
     static BuscaCompromissoPorID = async(idCompromisso)=>{
         try {
-            debugger;
+
             $.ajax({
                 url: `/busca/compromisso/${idCompromisso}`,
                 type: 'get',
