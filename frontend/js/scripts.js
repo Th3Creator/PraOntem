@@ -5,7 +5,7 @@ class Compromisso {
             let data = $('[a-id="data"]').val();
             let descricao = $('[a-id="descricao"]').val();
 
-             // Validação dos campos
+             debugger;
              if (!titulo || !data) {
                 alert("Por favor, preencha os campos de título e data.");
                 return; // Impede a criação se os campos estiverem vazios
