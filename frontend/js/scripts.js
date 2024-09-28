@@ -4,6 +4,7 @@ class Compromisso {
             let titulo = $('[a-id="titulo"]').val();
             let data = $('[a-id="data"]').val();
             let descricao = $('[a-id="descricao"]').val();
+            let email =  $('[a-id="email"]').val();
 
              debugger;
              if (!titulo || !data) {
@@ -17,6 +18,7 @@ class Compromisso {
                 data: {
                     'titulo': titulo,
                     'descricao': descricao,
+                    'email': email,
                     'status': 1,
                     'data': data
                 }, 
@@ -40,6 +42,7 @@ class Compromisso {
         try {
             let titulo = $('[a-id="titulo"]').val();
             let data = $('[a-id="data"]').val();
+            let email =  $('[a-id="email"]').val();
             let descricao = $('[a-id="descricao"]').val();
 
             $.ajax({
@@ -48,6 +51,7 @@ class Compromisso {
                 data: {
                     'idCompromisso': idCompromisso,
                     'titulo': titulo,
+                    'email': email,
                     'descricao': descricao,
                     'status': 1,
                     'data': data
@@ -120,6 +124,7 @@ class Compromisso {
                     $('[a-id="titulo"]').val(compromisso.Titulo);
                     $('[a-id="data"]').val(compromisso.Data);
                     $('[a-id="descricao"]').val(compromisso.Descricao);
+                    $('[a-id="email"]').val(compromisso.Email);
         
                     $('[a-id="cria-compromisso"]').text('Salvar');
                     $('[a-id="cria-compromisso"]').attr('id', idCompromisso);
