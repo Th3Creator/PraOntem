@@ -21,13 +21,11 @@ class Compromisso {
                     'data': data
                 }, 
                 success: function(response) {
-                    
-                    // Fechar o modal de compromisso (opcional)
-                    $('#exampleModal').modal('hide');
 
-                    
-                    //Mensagem 
-                    $('#successModal').modal('show');
+                    $('#exampleModal').modal('hide');  // Fecha o modal de criação
+
+                    alert("Compromisso criado com sucesso!");
+
                 },
                 error: function(response) {
                     alert("Houve um erro ao criar.");

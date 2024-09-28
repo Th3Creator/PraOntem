@@ -75,7 +75,7 @@
             </div>
 
             <label  class="col-form-label">Data:</label>
-            <textarea type="text" class="form-control" id="dataModal" a-id="data"  maxlength="10"></textarea>
+            <textarea type="text" class="form-control" id="dataModal" a-id="data"  maxlength="10" style="width: 150px;"></textarea>
 
             <div class="form-group">
                 <label for="message-text" class="col-form-label">Descrição:</label>
@@ -91,17 +91,27 @@
     </div>
     </div>
 
-
-    <!-- Modal de Sucesso -->
-    <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-body text-center">
-            <h5 class="modal-title" id="successModalLabel" style="font-size: 24px;">Compromisso criado com sucesso!</h5>
+    <!-- Modal de Alerta Personalizado -->
+    <div class="modal fade" id="customAlertModal" tabindex="-1" role="dialog" aria-labelledby="customAlertModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="customAlertModalLabel">Aviso</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Compromisso criado com sucesso!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+                </div>
             </div>
         </div>
-        </div>
     </div>
+
+    
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>

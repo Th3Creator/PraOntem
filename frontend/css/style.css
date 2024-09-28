@@ -59,7 +59,10 @@ tr:nth-child(even) {
 
 /* Adicionar espaço extra entre o campo de data e a descrição */
 #dataModal {
-    margin-bottom: 20px;
+    height: 36px; /* Define a altura do campo */
+    padding: 6px 12px; /* Ajuste o padding interno para manter uma boa aparência */
+    font-size: 14px; /* Tamanho de fonte para garantir boa legibilidade */
+    resize: none; /* Evita o redimensionamento do campo */
 } */
 
 /* Restante dos estilos */
