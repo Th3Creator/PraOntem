@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda de compromissos</title>
+    <title>Agenda</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" 
     integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
+    <link rel="shortcut icon" href="{{ url_for('static', filename='imgs/agenda.png') }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -67,17 +67,13 @@
 
             <div class="flex">
                 <label class="col-form-label">Título:</label>
-                <select class="form-select" aria-label="Default select example" a-id="titulo">
-                    <option selected>Lembrete</option>
-                    <option value="Consulta">Consulta</option>
-                    <option value="Reunião">Reunião</option>
-                </select>
+                <textarea type="text" class="form-control" a-id="titulo" style="width: 350px;"></textarea>
             </div>
 
             <label  class="col-form-label">Data:</label>
             <textarea type="text" class="form-control" id="dataModal" a-id="data"  maxlength="10" style="width: 150px;"></textarea>
 
-            <label  class="col-form-label">Vincule um e-mail:</label>
+            <label  class="col-form-label">E-mail vinculado:</label>
             <textarea type="text" class="form-control" id="dataModal" a-id="email"  maxlength="200" style="width: 250px;"></textarea>
 
             <div class="form-group">

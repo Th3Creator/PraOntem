@@ -6,9 +6,26 @@ from email.mime.text import MIMEText
 
 app = Flask(__name__, static_folder='../frontend', template_folder='../frontend')
 
-#CONEXÃO COM O BANCO
+# Padrão singleton 
+class DatabaseConnection:
+    _instance = None
+
+    def __init__(self):
+        if not DatabaseConnection._instance:
+            DatabaseConnection._instance = sqlite3.connect("./bd/PraOntem", check_same_thread=False)
+            # Adicione a linha abaixo para retornar os dados no formato de dicionário
+            DatabaseConnection._instance.row_factory = sqlite3.Row
+
+    @staticmethod
+    def get_instance():
+        if not DatabaseConnection._instance:
+            DatabaseConnection._instance = sqlite3.connect("./bd/PraOntem", check_same_thread=False)
+            DatabaseConnection._instance.row_factory = sqlite3.Row
+        return DatabaseConnection._instance
+
+# Uso:
 def ConectaBD():
-    return sqlite3.connect("./bd/PraOntem")
+    return DatabaseConnection.get_instance()
 
 # Padrão Observer
 class Subject:

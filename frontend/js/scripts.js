@@ -166,14 +166,10 @@ class Compromisso {
     }
 
     static AbreModalCompromisso = ()=>{
-
-
         $('#exampleModal').modal('show');
     }
 
-    static FechaModalCompromisso = ()=>{
-
-        
+    static FechaModalCompromisso = ()=>{   
         $('[a-id="cria-compromisso"]').text('Criar');
         $('[a-id="cria-compromisso"]').attr('id', 0);
         $('#exampleModal').modal('hide');
