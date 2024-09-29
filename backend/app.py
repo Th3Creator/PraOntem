@@ -92,6 +92,30 @@ class CompromissoManager(Subject):
         # Notificar observadores (ex: enviar e-mail)
         self.notify(compromisso)
 
+    def deletar_compromisso(self, idCompromisso):
+        with ConectaBD() as conexao:
+            cursor = conexao.cursor()
+            # Buscar o compromisso a ser deletado
+            cursor.execute('SELECT Titulo, Descricao, Data, Email FROM Compromissos WHERE IDCompromisso = ?', (idCompromisso,))
+            compromisso = cursor.fetchone()
+
+            if compromisso:
+                # Monta o dicionário de dados do compromisso
+                compromisso_info = {
+                    'titulo': compromisso['Titulo'],
+                    'descricao': compromisso['Descricao'],
+                    'status': 'deletado',
+                    'data': compromisso['Data'],
+                    'email': compromisso['Email']
+                }
+
+                # Deletar o compromisso do banco de dados
+                cursor.execute('DELETE FROM Compromissos WHERE IDCompromisso = ?', (idCompromisso,))
+                conexao.commit()
+
+                # Notificar os observadores (ex: enviar e-mail)
+                self.notify(compromisso_info)     
+    
 
 def enviar_email(destinatario, assunto, corpo):
     remetente = 'trab.agendamento@gmail.com'
@@ -116,11 +140,6 @@ def enviar_email(destinatario, assunto, corpo):
 compromisso_manager = CompromissoManager()
 email_observer = EmailObserver()
 compromisso_manager.register(email_observer)  # Registrar o observador de e-mails
-
-
-
-
-
 
 @app.route('/cria/compromisso', methods=['POST'])
 def CriaCompromisso():
@@ -147,15 +166,10 @@ def AtualizaCompromisso():
 
 @app.route('/deleta/compromisso', methods=['DELETE'])
 def DeletaCompromisso():
-    idCompromisso = request.form.get('idCompromisso')
-    print(idCompromisso)
-    with ConectaBD() as conexao:
-        cursor = conexao.cursor()
-        cursor.execute('DELETE FROM Compromissos WHERE IDCompromisso = ?', (idCompromisso,))
-        conexao.commit()
+    
+    compromisso_manager.deletar_compromisso(request.form.get('idCompromisso'))
 
     return '', 204
-
 
 
 @app.route('/busca/compromissos/competencia', methods=['GET'])
