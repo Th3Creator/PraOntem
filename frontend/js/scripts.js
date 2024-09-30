@@ -5,9 +5,7 @@ class Compromisso {
             let data = $('[a-id="data"]').val();
             let descricao = $('[a-id="descricao"]').val();
             let email =  $('[a-id="email"]').val();
-
-            // Captura o estado do botão deslizante
-            let status = $('.slider').hasClass('active') ? 1 : 0;
+            let status = $('[a-id="status"]').val();
 
              if (!titulo || !data) {
                 alert("Por favor, preencha os campos de título e data.");
@@ -46,9 +44,7 @@ class Compromisso {
             let data = $('[a-id="data"]').val();
             let email =  $('[a-id="email"]').val();
             let descricao = $('[a-id="descricao"]').val();
-
-            // Captura o estado do botão deslizante
-            let status = $('.slider').hasClass('active') ? 1 : 0;
+            let status = $('[a-id="status"]').val();
 
             $.ajax({
                 url: '/atualiza/compromisso',
@@ -136,6 +132,8 @@ class Compromisso {
                     $('[a-id="data"]').val(compromisso.Data);
                     $('[a-id="descricao"]').val(compromisso.Descricao);
                     $('[a-id="email"]').val(compromisso.Email);
+                    $('[a-id="status"]').val(compromisso.Concluido);
+
         
                     $('[a-id="cria-compromisso"]').text('Salvar');
                     $('[a-id="cria-compromisso"]').attr('id', idCompromisso);
@@ -154,15 +152,15 @@ class Compromisso {
     static ListaCompromissos = (compromissos)=>{
         let tBody = $('[a-id="tbody-compromissos"]');
         tBody.empty();
-
+        
         compromissos.forEach((compromisso) => {
-            let statusText = compromisso.Concluido === 1 ? 'Sim' : 'Não';
+
             let compromissoHTML = `
                 <tr>
                     <td>${compromisso.Titulo}</td>
                     <td>${compromisso.Descricao}</td>
                     <td>${compromisso.Data}</td>
-                    <td>${statusText}</td>
+                    <td>${compromisso.Concluido}</td>
                     <td>
                         <button type="button" class="btn btn-outline-danger" id="${compromisso.IDCompromisso}" a-id="deleta-compromisso">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">

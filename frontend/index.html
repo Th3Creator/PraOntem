@@ -65,7 +65,7 @@
         <div class="modal-body">
             <div class="flex">
                 <label class="col-form-label">Título:</label>
-                <textarea type="text" class="form-control" a-id="titulo" style="width: 350px;"></textarea>
+                <textarea type="text" class="form-control" id="tituloModal" a-id="titulo" style="width: 350px;"></textarea>
             </div>
 
             <label  class="col-form-label">Data:</label>
@@ -80,19 +80,11 @@
             </div>
 
             <!-- Botão para compromisso concluído -->
-            <div style="display: flex; align-items: center;">
-                <span style="font-size: 16px; margin-right: 10px;">Concluído:</span>
-                <div class="slide-container">
-                <div class="slider" onclick="slideButton(this)"></div>
-                </div>
-            </div>
-            
-            <script>
-            function slideButton(slider) {
-                slider.classList.toggle("active");
-            }
-            </script>
-
+            <label  class="col-form-label">Concluído:</label><br>
+            <select class="form-select" aria-label="Default select example"  a-id="status" style="width: 150px;text-align: center;border-radius: 5px;">
+                <option selected>Não</option>
+                <option value="Sim">Sim</option>
+              </select>
         </div>
 
 

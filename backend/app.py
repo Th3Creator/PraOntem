@@ -60,7 +60,7 @@ class CompromissoManager(Subject):
         compromisso = {
             'titulo': titulo,
             'descricao': descricao,
-            'status': 'criado',
+            'status': status,
             'data': data,
             'email': email
         }
@@ -78,7 +78,7 @@ class CompromissoManager(Subject):
         compromisso = {
             'titulo': titulo,
             'descricao': descricao,
-            'status': 'atualizado',
+            'status': status,
             'data': data,
             'email': email
         }
@@ -187,7 +187,8 @@ def CompromissosPorCompetencia():
                 SELECT Compromisso.IDCompromisso, 
                     Compromisso.Titulo, 
                     Compromisso.Descricao, 
-                    Compromisso.Data
+                    Compromisso.Data,
+                    Compromisso.Concluido
                 FROM Compromissos Compromisso
                 WHERE substr(Compromisso.Data, 4, 2) = ?  
                 AND substr(Compromisso.Data, 7, 4) = ? 
@@ -195,7 +196,7 @@ def CompromissosPorCompetencia():
             cursor.execute(query, (mes, ano))
             compromissos = cursor.fetchall()
 
-            resultado = [{"IDCompromisso": c[0], "Titulo": c[1], "Descricao": c[2], "Data": c[3]} for c in compromissos]
+            resultado = [{"IDCompromisso": c[0], "Titulo": c[1], "Descricao": c[2], "Data": c[3],  "Concluido": c[4]} for c in compromissos]
             return jsonify(resultado)
 
     except Exception as e:
@@ -207,7 +208,7 @@ def CompromissoPorID(id):
         with ConectaBD() as conexao:
             cursor = conexao.cursor()
             query = """
-                SELECT IDCompromisso, Titulo, Descricao, Data, Email
+                SELECT IDCompromisso, Titulo, Descricao, Data, Concluido, Email
                 FROM Compromissos
                 WHERE IDCompromisso = ?
             """
@@ -220,7 +221,8 @@ def CompromissoPorID(id):
                     "Titulo": compromisso[1],
                     "Descricao": compromisso[2],
                     "Data": compromisso[3],
-                    "Email": compromisso[4]
+                    "Concluido": compromisso[4],
+                    "Email": compromisso[5]
                 }
                 return jsonify(resultado), 200
             else:
