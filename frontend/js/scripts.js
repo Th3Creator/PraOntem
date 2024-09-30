@@ -6,6 +6,9 @@ class Compromisso {
             let descricao = $('[a-id="descricao"]').val();
             let email =  $('[a-id="email"]').val();
 
+            // Captura o estado do botão deslizante
+            let status = $('.slider').hasClass('active') ? 1 : 0;
+
              if (!titulo || !data) {
                 alert("Por favor, preencha os campos de título e data.");
                 return; // Impede a criação se os campos estiverem vazios
@@ -18,7 +21,7 @@ class Compromisso {
                     'titulo': titulo,
                     'descricao': descricao,
                     'email': email,
-                    'status': 1,
+                    'status': status,
                     'data': data
                 }, 
                 success: function(response) {
@@ -44,6 +47,9 @@ class Compromisso {
             let email =  $('[a-id="email"]').val();
             let descricao = $('[a-id="descricao"]').val();
 
+            // Captura o estado do botão deslizante
+            let status = $('.slider').hasClass('active') ? 1 : 0;
+
             $.ajax({
                 url: '/atualiza/compromisso',
                 type: 'put',
@@ -52,7 +58,7 @@ class Compromisso {
                     'titulo': titulo,
                     'email': email,
                     'descricao': descricao,
-                    'status': 1,
+                    'status': status,
                     'data': data
                 }, 
                 success: function(response) {
@@ -102,7 +108,13 @@ class Compromisso {
                     'mes': mes
                 }, 
                 success: function(response) {
+                    if (response.length == 0){ 
+                        Compromisso.ListaCompromissos([]);
+                        alert("Não existe nenhum compromisso registrado para este mês.");
+
+                    }else { 
                     Compromisso.ListaCompromissos(response);
+                    }
                 },
                 error: function(response) {
                     alert("Houve um erro ao buscar.");
@@ -144,12 +156,13 @@ class Compromisso {
         tBody.empty();
 
         compromissos.forEach((compromisso) => {
+            let statusText = compromisso.Concluido === 1 ? 'Sim' : 'Não';
             let compromissoHTML = `
                 <tr>
                     <td>${compromisso.Titulo}</td>
                     <td>${compromisso.Descricao}</td>
                     <td>${compromisso.Data}</td>
-                    <td>Sim</td>
+                    <td>${statusText}</td>
                     <td>
                         <button type="button" class="btn btn-outline-danger" id="${compromisso.IDCompromisso}" a-id="deleta-compromisso">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
