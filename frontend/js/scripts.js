@@ -301,3 +301,5 @@ $('#exampleModal').on('hidden.bs.modal', function () {
     $('[a-id="cria-compromisso"]').text('Criar');  
     $('[a-id="cria-compromisso"]').attr('id', 0);
 });
+
+window.Compromisso = Compromisso;
