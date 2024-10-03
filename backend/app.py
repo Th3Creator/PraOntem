@@ -50,8 +50,8 @@ class Observer:
 class EmailObserver(Observer):
     def update(self, compromisso):
         destinatario = compromisso['email']
-        assunto = f"Compromisso {compromisso['status']}"
-        corpo = f"Olá! Seu compromisso foi {compromisso['status']}:\n\nTítulo: {compromisso['titulo']}\nDescrição: {compromisso['descricao']}\nData: {compromisso['data']}."
+        assunto = f"Compromisso {compromisso['titulo']}"
+        corpo = f"Olá! Seu compromisso:\n\nTítulo: {compromisso['titulo']}\nDescrição: {compromisso['descricao']}\nData: {compromisso['data']}.\n\nFoi alterado!"
         enviar_email(destinatario, assunto, corpo)
 
 # Classe CompromissoManager que gerencia compromissos e notifica observadores
